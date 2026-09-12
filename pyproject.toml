@@ -1,0 +1,12 @@
+[project]
+name = "cvprofiles-demo"
+version = "0.1.0"
+description = "Interactive demo for cvprofiles: change the assumptions, watch the conclusion move."
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.57",
+    "cvprofiles==3.0.2",
+    "pandas>=2.2",
+    "altair>=5.4",
+    "pyyaml>=6.0",
+]

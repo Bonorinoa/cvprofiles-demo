@@ -1,0 +1,28 @@
+# Academic world, matching augusto-gonzalezbonorino.com.
+# Values are the site's own tokens, converted from HSL.
+# Do NOT add custom CSS for theming — this file is the sanctioned surface.
+
+[theme]
+base = "light"
+primaryColor = "#6b2c1f"                 # oxblood  hsl(11 56% 27%)
+backgroundColor = "#f6f1e7"              # paper    hsl(38 44% 94%)
+secondaryBackgroundColor = "#e8dece"     # paper-deep
+textColor = "#1d130c"                    # ink      hsl(24 40% 8%)
+linkColor = "#6b2c1f"
+borderColor = "#c9bba6"                  # rule
+linkUnderline = false
+
+baseRadius = "2px"
+buttonRadius = "2px"
+showWidgetBorder = true
+
+font = "'Fraunces':https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap"
+headingFont = "'Fraunces':https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&display=swap"
+codeFont = "'Geist Mono':https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap"
+
+baseFontSize = 16
+headingFontSizes = ["40px", "28px", "21px", "17px", "15px", "13px"]
+headingFontWeights = [500, 500, 500, 500, 500, 500]
+
+[server]
+headless = true
