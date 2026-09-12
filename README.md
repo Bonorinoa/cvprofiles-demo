@@ -30,12 +30,14 @@ uv pip install -e .
 .venv/bin/streamlit run streamlit_app.py
 ```
 
-Two screens:
+Four screens:
 
 | Route | Screen | What it shows |
 |---|---|---|
 | `/` | **Run** | Menu + restriction θ as live controls. Reports the admissible set `M*`, the identified range `[L, U]`, and which restriction rejected each measure. |
 | `/reduction` | **Reduction** | Leave-one-out over the menu. Shows which measures are load-bearing and which are inert. |
+| `/failure-mode` | **Failure mode** | One slider: the tightness multiplier. Drive it far enough and every measure dies — the empty admissible set, shown as the finding it is. |
+| `/method` | **Method** | How to read the numbers, for a reader who has never seen the tool. |
 
 The default page lives at `/`; `url_path` on a `default=True` page does **not** create a
 route, so `/run` 404s. `reduction` is its own route.
@@ -73,8 +75,15 @@ route, so `/run` 404s. `reduction` is its own route.
 ## Verifying changes
 
 ```bash
-.venv/bin/python verify_app.py     # AppTest: both pages render, no exceptions
+.venv/bin/python -m pytest tests/test_engine.py -q   # invariant suite over the engine wrapper
+.venv/bin/python verify_app.py                       # AppTest: pages render, no exceptions
 ```
+
+`tests/test_engine.py` pins the contracts the demo's credibility rests on: the advertised
+headline is reproducible from the real engine, a menu subset is a different validated input
+(different `run_id`), the same measures are load-bearing and inert every time, the empty
+finding is reachable and is not an error, and the wrapper returns a structured error dict
+instead of raising.
 
 `verify_app.py` also hunts for empty-`M*` configurations, so the headline state stays
 reachable.

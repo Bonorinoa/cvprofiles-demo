@@ -88,9 +88,28 @@ def restrictions_of(fx: Fixture) -> list[dict]:
 def _stage_workspace(
     fx: Fixture, measures: tuple[str, ...], thetas: tuple[tuple[str, float], ...]
 ) -> Path:
-    """Materialise one validated input set in a fresh directory."""
-    root = fixture_root(fx)
+    """Materialise one validated input set in a fresh directory.
+
+    The directory is removed if staging fails part-way: the caller cannot clean up
+    a path it never received, so failure cleanup belongs here.
+    """
     work = Path(tempfile.mkdtemp(prefix="cvp_case_"))
+    try:
+        _populate_workspace(work, fx, measures, thetas)
+    except Exception:
+        shutil.rmtree(work, ignore_errors=True)
+        raise
+    return work
+
+
+def _populate_workspace(
+    work: Path,
+    fx: Fixture,
+    measures: tuple[str, ...],
+    thetas: tuple[tuple[str, float], ...],
+) -> None:
+    """Write one validated input set into ``work``."""
+    root = fixture_root(fx)
     for name in ("network.yaml", "beta.yaml", "score_manifest.json"):
         src = root / name
         if src.exists():
@@ -112,7 +131,6 @@ def _stage_workspace(
             if r["id"] in override:
                 r["theta"] = override[r["id"]]
         (work / "network.yaml").write_text(yaml.safe_dump(net, sort_keys=False))
-    return work
 
 
 @st.cache_data(show_spinner=False, max_entries=256)
@@ -122,10 +140,13 @@ def run_case(
     thetas: tuple[tuple[str, float], ...] = (),
 ) -> dict:
     """Run one construct-validity profile. Returns a dict, or {"ok": False, ...}."""
-    fx = BY_KEY[fixture_key]
     work: Path | None = None
     run_dir: Path | None = None
     try:
+        # Inside the try on purpose: an unknown fixture key must come back as a
+        # structured error, not a KeyError. The UI only ever passes keys from
+        # FIXTURES, but the contract is what the tests hold us to.
+        fx = BY_KEY[fixture_key]
         work = _stage_workspace(fx, measures, thetas)
         run_dir = Path(tempfile.mkdtemp(prefix="cvp_run_"))
         result = run_profile(
