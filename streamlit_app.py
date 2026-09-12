@@ -22,6 +22,12 @@ pg = st.navigation(
             default=True,
         ),
         st.Page(
+            "app_pages/build_network.py",
+            title="Build network",
+            icon=":material/account_tree:",
+            url_path="build-network",
+        ),
+        st.Page(
             "app_pages/reduction.py",
             title="Reduction",
             icon=":material/compress:",

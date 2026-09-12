@@ -38,6 +38,22 @@ Four screens:
 | `/reduction` | **Reduction** | Leave-one-out over the menu. Shows which measures are load-bearing and which are inert. |
 | `/failure-mode` | **Failure mode** | One slider: the tightness multiplier. Drive it far enough and every measure dies — the empty admissible set, shown as the finding it is. |
 | `/method` | **Method** | How to read the numbers, for a reader who has never seen the tool. |
+| `/build-network` | **Build network** | Author your own nomological network: change restriction types, re-point what each binds to, tighten θ. Teaches the trade — bind to an **auxiliary** column and the reduction curve survives; bind to a **measure** and it does not. |
+
+The network builder is the pedagogical centrepiece. It deliberately lets the reader walk
+into the structural trap (a restriction anchored to a measure) and then shows the engine
+refusing, because that refusal is the thesis: the tool declines to guess.
+
+### Feedback
+
+Each page ends with a two-tier footer (`core/feedback.py`): one-click sentiment, plus an
+optional note answering *"what are you trying to measure or decide?"* — the only kind of
+feedback worth acting on.
+
+**Nothing is stored inside the app.** Streamlit Community Cloud's filesystem is ephemeral,
+so appending to a local file loses feedback on every restart. Set `FEEDBACK_ENDPOINT` (and
+optionally `CONTACT_EMAIL`) in the app's secrets to POST somewhere real; with nothing
+configured the form falls back to a `mailto:` link.
 
 The default page lives at `/`; `url_path` on a `default=True` page does **not** create a
 route, so `/run` 404s. `reduction` is its own route.

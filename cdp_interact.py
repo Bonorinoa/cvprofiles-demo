@@ -35,6 +35,8 @@ async def main() -> None:
     ap.add_argument("url")
     ap.add_argument("out")
     ap.add_argument("--arrows", type=int, default=0)
+    ap.add_argument("--click-text", default=None,
+                    help="click the first element whose visible text matches, then settle")
     ap.add_argument("--settle", type=float, default=14.0)
     ap.add_argument("--height", type=int, default=1500)
     args = ap.parse_args()
@@ -58,6 +60,40 @@ async def main() -> None:
         )
         await send("Page.navigate", url=args.url)
         await asyncio.sleep(args.settle)
+
+        if args.click_text:
+            box = await send(
+                "Runtime.evaluate",
+                returnByValue=True,
+                expression=f"""
+                  (() => {{
+                    const want = {json.dumps(args.click_text)};
+                    const els = Array.from(document.querySelectorAll('button, [role="radio"], [role="tab"], label'));
+                    const el = els.find(e => (e.textContent || '').trim() === want)
+                            || els.find(e => (e.textContent || '').includes(want));
+                    if (!el) return null;
+                    el.scrollIntoView({{block: 'center'}});
+                    const r = el.getBoundingClientRect();
+                    return JSON.stringify({{x: r.x + r.width / 2, y: r.y + r.height / 2}});
+                  }})()
+                """,
+            )
+            raw = box["result"]["result"]["value"]
+            if not raw:
+                print(f"  click target not found: {args.click_text!r}")
+            else:
+                point = json.loads(raw)
+                for kind in ("mousePressed", "mouseReleased"):
+                    await send(
+                        "Input.dispatchMouseEvent",
+                        type=kind,
+                        x=point["x"],
+                        y=point["y"],
+                        button="left",
+                        clickCount=1,
+                    )
+                print(f"  clicked {args.click_text!r} at ({point['x']:.0f},{point['y']:.0f})")
+                await asyncio.sleep(7)  # rerun + repaint
 
         if args.arrows:
             found = await send(

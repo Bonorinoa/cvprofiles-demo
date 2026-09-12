@@ -22,6 +22,7 @@ Run with::
 from __future__ import annotations
 
 import glob
+import json
 import os
 import sys
 import tempfile
@@ -333,3 +334,53 @@ def test_unknown_fixture_key_returns_a_structured_error():
     assert case["ok"] is False, case
     assert case["error"] == "KeyError", case
     assert isinstance(case["detail"], str) and case["detail"], case
+
+
+def test_user_authored_aux_anchored_network_runs():
+    """A network a user writes from scratch is a first-class input."""
+    served = E.rows_to_restrictions(E.default_restrictions(E.BY_KEY[FIXTURE]))
+    assert len(served) == 3, served
+    case = E.run_custom(
+        FIXTURE, tuple(E.measures_of(E.BY_KEY[FIXTURE])), json.dumps(served, sort_keys=True)
+    )
+    assert case["ok"] is True, case
+
+
+def test_measure_anchored_network_breaks_the_reduction_curve():
+    """The builder's central lesson, pinned as a contract.
+
+    A restriction bound to an AUXILIARY column survives every single-measure removal.
+    Bind one to a MEASURE instead and the removal of that measure is refused, because
+    the restriction would point at a column that no longer exists. This is why the
+    page can promise the reduction curve for one network shape and not the other --
+    if this test ever fails, the page is lying to the reader.
+    """
+    fx = E.BY_KEY[FIXTURE]
+    menu = tuple(E.measures_of(fx))
+    spec = E.rows_to_restrictions(E.default_restrictions(fx))
+
+    # aux-anchored: leave-one-out is clean, and nothing is classified as measure-anchored
+    aux = E.leave_one_out_custom(FIXTURE, json.dumps(spec, sort_keys=True))
+    assert all(r.get("ok") for r in aux["rows"]), aux["rows"]
+    assert all(E.anchor_class(r, menu) != "measure" for r in spec), spec
+
+    # bind one restriction to a measure
+    measured = [
+        *spec,
+        {
+            "id": "u_meas",
+            "type": "corr_min",
+            "theta": 0.10,
+            "params": {"variable": menu[0]},
+            "stage": "select",
+        },
+    ]
+    assert E.anchor_class(measured[-1], menu) == "measure"
+
+    loo = E.leave_one_out_custom(FIXTURE, json.dumps(measured, sort_keys=True))
+    refused = [r for r in loo["rows"] if not r.get("ok")]
+    assert len(refused) == 1, refused
+    assert refused[0]["dropped"] == menu[0], refused
+    assert refused[0]["error"] == "RestrictError", refused
+    # the damage is specific: every OTHER removal still runs
+    assert len(loo["rows"]) - 1 - len(refused) == len(menu) - 1, loo["rows"]
