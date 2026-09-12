@@ -82,3 +82,18 @@ over CDP and waits:
 
 `--user-data-dir` is required: without it Chrome reuses a running instance and ignores
 `--remote-debugging-port`.
+
+## Deploying to Streamlit Community Cloud
+
+1. <https://share.streamlit.io> → **New app** → **Deploy a public app from GitHub**
+2. Repository `Bonorinoa/cvprofiles-demo`, branch `main`
+3. Main file path: **`streamlit_app.py`**
+4. Deploy. No secrets are required — the app reads only the fixture bundled in the repo
+   (`data/wvs_gps/`) and the one shipped inside the `cvprofiles` wheel (`mini_v1`).
+
+Verified from a clean clone: fresh `python 3.11` venv + `pip install -r requirements.txt`
+→ `streamlit 1.63.0`, `cvprofiles 3.0.2`, both pages render with no exception.
+
+Dependencies are pinned in `requirements.txt` (Streamlit Cloud reads this, not
+`pyproject.toml`). Keep the `cvprofiles==3.0.2` pin — the demo's numbers are a property of
+that release.
