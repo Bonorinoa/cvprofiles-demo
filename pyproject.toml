@@ -10,3 +10,8 @@ dependencies = [
     "altair>=5.4",
     "pyyaml>=6.0",
 ]
+
+[project.optional-dependencies]
+# Not needed to run the app — install to run the invariant suite in tests/.
+#   uv pip install -e ".[dev]"
+dev = ["pytest>=8"]
