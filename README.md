@@ -13,6 +13,15 @@ implications, which of your measures is even entitled to the interpretation you 
 The answer is a set (`M*`) and a range, not a star. That is hard to explain in prose and
 obvious when someone moves a slider.
 
+**Run** — menu and restriction θ as live controls:
+
+![Run screen](shots/run.png)
+
+**Reduction** — with the same fixture, five of seven measures turn out to be inert:
+
+![Reduction screen](shots/reduction.png)
+
+
 ## Run it
 
 ```bash
