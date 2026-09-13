@@ -131,8 +131,9 @@ else:
     )
     st.altair_chart(chart, width="stretch")
     st.caption(
-        "The bar is not a confidence interval. It is the range of conclusions your "
-        "assumptions leave standing — the image of β over the measures that survive."
+        "The bar is not a confidence interval. It runs from the lowest to the highest "
+        "value β takes across the measures that survived — drawn by your restrictions, "
+        "not by sampling noise."
     )
 
 frames = []
