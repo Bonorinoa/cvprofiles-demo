@@ -15,13 +15,18 @@ from core.engine import (
 
 INK = "#6b2c1f"
 
-st.title("Run a construct-validity profile")
+st.title("Which of your measurements survive your own theory?")
 
 st.markdown(
-    "A score is entitled to the interpretation you give it only if it survives the "
-    "observable implications your theory declares. Everything below is researcher-owned "
-    "input: which measures are in the menu, and how tight the restrictions are. "
-    "The engine reports who survives — and what that leaves identified."
+    "Most measurement choices are never tested before the data is collected. A theory "
+    "about how two constructs relate implies things that must hold in the data — and "
+    "those implications are checkable **before** you spend anything on the study."
+)
+
+st.markdown(
+    "This runs that check. Choose which measures are in the running, and how demanding "
+    "your theory is; the engine reports which ones survive and what that leaves "
+    "identified. Unfamiliar with the symbols? See *How to read this*."
 )
 
 # ---------------------------------------------------------------- controls

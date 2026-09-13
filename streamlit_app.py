@@ -16,32 +16,32 @@ pg = st.navigation(
     [
         st.Page(
             "app_pages/run.py",
-            title="Run",
+            title="Which measures survive?",
             icon=":material/play_circle:",
             url_path="run",
             default=True,
         ),
         st.Page(
-            "app_pages/build_network.py",
-            title="Build network",
-            icon=":material/account_tree:",
-            url_path="build-network",
-        ),
-        st.Page(
             "app_pages/reduction.py",
-            title="Reduction",
+            title="What's load-bearing?",
             icon=":material/compress:",
             url_path="reduction",
         ),
         st.Page(
+            "app_pages/build_network.py",
+            title="Build your theory",
+            icon=":material/account_tree:",
+            url_path="build-network",
+        ),
+        st.Page(
             "app_pages/failure_mode.py",
-            title="Failure mode",
+            title="When nothing survives",
             icon=":material/block:",
             url_path="failure-mode",
         ),
         st.Page(
             "app_pages/method.py",
-            title="Method",
+            title="How to read this",
             icon=":material/menu_book:",
             url_path="method",
         ),

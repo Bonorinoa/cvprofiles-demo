@@ -13,12 +13,15 @@ import argparse
 import asyncio
 import base64
 import json
+import os
 import urllib.request
 from pathlib import Path
 
 import websockets
 
-DEBUG_PORT = 9222
+# Overridable: the user's own Chrome can hold the default 9222, and killing their
+# browser to take a screenshot is not an acceptable trade. Use CDP_PORT=9333 instead.
+DEBUG_PORT = int(os.environ.get("CDP_PORT", "9222"))
 
 
 def ws_url() -> str:

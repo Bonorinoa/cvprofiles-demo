@@ -30,15 +30,15 @@ uv pip install -e .
 .venv/bin/streamlit run streamlit_app.py
 ```
 
-Four screens:
+Five screens, named as questions rather than as tools:
 
 | Route | Screen | What it shows |
 |---|---|---|
-| `/` | **Run** | Menu + restriction θ as live controls. Reports the admissible set `M*`, the identified range `[L, U]`, and which restriction rejected each measure. |
-| `/reduction` | **Reduction** | Leave-one-out over the menu. Shows which measures are load-bearing and which are inert. |
-| `/failure-mode` | **Failure mode** | One slider: the tightness multiplier. Drive it far enough and every measure dies — the empty admissible set, shown as the finding it is. |
-| `/method` | **Method** | How to read the numbers, for a reader who has never seen the tool. |
-| `/build-network` | **Build network** | Author your own nomological network: change restriction types, re-point what each binds to, tighten θ. Teaches the trade — bind to an **auxiliary** column and the reduction curve survives; bind to a **measure** and it does not. |
+| `/` | **Which measures survive?** | Menu + restriction θ as live controls. Reports the admissible set `M*`, the identified range `[L, U]`, and which restriction rejected each measure. |
+| `/reduction` | **What's load-bearing?** | Leave-one-out over the menu. Shows which measures are load-bearing and which are inert. |
+| `/build-network` | **Build your theory** | Author your own nomological network: change restriction types, re-point what each binds to, tighten θ. Teaches the trade — bind to an **auxiliary** column and the reduction curve survives; bind to a **measure** and it does not. |
+| `/failure-mode` | **When nothing survives** | One slider: the tightness multiplier. Drive it far enough and every measure dies — the empty admissible set, shown as the finding it is. |
+| `/method` | **How to read this** | What `M*`, `[L, U]`, θ and width mean, for a reader who has never seen the tool. |
 
 The network builder is the pedagogical centrepiece. It deliberately lets the reader walk
 into the structural trap (a restriction anchored to a measure) and then shows the engine
