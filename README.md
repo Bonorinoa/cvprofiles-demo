@@ -30,11 +30,13 @@ uv pip install -e .
 .venv/bin/streamlit run streamlit_app.py
 ```
 
-Five screens, named as questions rather than as tools:
+Six screens. **Start here** is the front door: the claim, one live result, three
+steps of how it works. The rest are named as questions rather than as tools.
 
 | Route | Screen | What it shows |
 |---|---|---|
-| `/` | **Which measures survive?** | Menu + restriction θ as live controls. Reports the admissible set `M*`, the identified range `[L, U]`, and which restriction rejected each measure. |
+| `/` | **Start here** | The claim, the stakes, and one result **computed live** from the real engine (never hand-typed, so it cannot drift). Three-step how-it-works. Links to the other screens. |
+| `/run` | **Which measures survive?** | Menu + restriction θ as live controls. Reports the admissible set `M*`, the identified range `[L, U]`, and which restriction rejected each measure. |
 | `/reduction` | **What's load-bearing?** | Leave-one-out over the menu. Shows which measures are load-bearing and which are inert. |
 | `/build-network` | **Build your theory** | Author your own nomological network: change restriction types, re-point what each binds to, tighten θ. Teaches the trade — bind to an **auxiliary** column and the reduction curve survives; bind to a **measure** and it does not. |
 | `/failure-mode` | **When nothing survives** | One slider: the tightness multiplier. Drive it far enough and every measure dies — the empty admissible set, shown as the finding it is. |
@@ -56,7 +58,9 @@ optionally `CONTACT_EMAIL`) in the app's secrets to POST somewhere real; with no
 configured the form falls back to a `mailto:` link.
 
 The default page lives at `/`; `url_path` on a `default=True` page does **not** create a
-route, so `/run` 404s. `reduction` is its own route.
+route. Now that `Overview` is the default, `Which measures survive?` is a normal page and
+`/run` resolves — but if you ever make it default again, `/run` will 404 and you must use
+`/`.
 
 ## Design notes
 

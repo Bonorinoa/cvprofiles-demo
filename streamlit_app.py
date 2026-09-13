@@ -15,11 +15,17 @@ st.set_page_config(
 pg = st.navigation(
     [
         st.Page(
+            "app_pages/landing.py",
+            title="Start here",
+            icon=":material/home:",
+            url_path="overview",
+            default=True,
+        ),
+        st.Page(
             "app_pages/run.py",
             title="Which measures survive?",
             icon=":material/play_circle:",
             url_path="run",
-            default=True,
         ),
         st.Page(
             "app_pages/reduction.py",

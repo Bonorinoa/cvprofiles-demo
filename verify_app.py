@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 from core.engine import FIXTURES, measures_of, restrictions_of, run_case, width_of  # noqa: E402
 
 PAGES = (
+    "app_pages/landing.py",
     "app_pages/run.py",
     "app_pages/reduction.py",
     "app_pages/build_network.py",
