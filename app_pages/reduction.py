@@ -113,6 +113,11 @@ if not drivers.empty:
         icon=":material/warning:",
     )
 
+st.page_link(
+    "app_pages/method.py",
+    label="How to read this",
+    icon=":material/menu_book:",
+)
 st.caption(
     "Each subset is a different validated input and therefore has a different run id. "
     "Exploratory — not citable paper evidence."

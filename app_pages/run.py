@@ -26,7 +26,12 @@ st.markdown(
 st.markdown(
     "This runs that check. Choose which measures are in the running, and how demanding "
     "your theory is; the engine reports which ones survive and what that leaves "
-    "identified. Unfamiliar with the symbols? See *How to read this*."
+    "identified."
+)
+st.page_link(
+    "app_pages/method.py",
+    label="Unfamiliar with the symbols? How to read this",
+    icon=":material/menu_book:",
 )
 
 # ---------------------------------------------------------------- controls

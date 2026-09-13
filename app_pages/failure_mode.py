@@ -93,6 +93,11 @@ else:
     ]
     st.dataframe(pd.DataFrame(frames), hide_index=True, width="stretch")
 
+st.page_link(
+    "app_pages/method.py",
+    label="How to read this",
+    icon=":material/menu_book:",
+)
 st.caption(
     "Exploratory — not citable paper evidence. Each tightness setting is a different "
     f"input to the engine and gets its own run id: `{case['run_id'][:20]}…`"
